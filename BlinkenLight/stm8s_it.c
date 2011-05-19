@@ -18,7 +18,7 @@ void TIM1_UPD_OVF_TRG_BRK_IRQHandler(void) {
         // We're currently getting dimmer.
         if (current_brightness == 0) {
             // We're already at the minimum brightness; start getting brighter.
-            brightness_direction = +1;
+            brightness_direction = +2;
         }
     }
     
