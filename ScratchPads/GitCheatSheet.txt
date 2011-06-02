@@ -1,0 +1,5 @@
+Update everything from GitHub
+$ git pull GitHub master
+ 
+Remove (but keep local) file(s)
+$ git rm --cache *.wdb

@@ -6,3 +6,4 @@
 */Release/
 # ignore environment files
 *.wed
+*.wdb
