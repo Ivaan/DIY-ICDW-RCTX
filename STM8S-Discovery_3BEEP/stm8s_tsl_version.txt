@@ -1,0 +1,111 @@
+================================================================================
+                          STM8 TOUCH SENSING PACKAGE
+                                 Release Notes
+================================================================================
+
+
+V1.3.0 / 29-OCT-2009
+--------------------
+
+ - Content:
+
+   o STM8 TOUCH SENSING LIBRARY V1.3.0
+   o STM8S207_TSRCK5W1_EVAL board firmware V1.3.0
+   o STM8S basic example firmware V1.3.0
+
+   o STM8S Standard Peripherals Library V1.1.1
+
+
+V1.2.0 / 24-MAR-2009
+--------------------
+
+ - Content:
+
+   o STM8 TOUCH SENSING LIBRARY V1.2.0
+   o STM8S207_TSRCK5W1_EVAL board firmware V1.2.0
+   o STM8S basic example firmware V1.2.0
+
+   o STM8S Standard Peripherals Library V1.0.1
+
+
+V1.1.0 / 21-FEB-2009
+--------------------
+
+ - New option (NEGDETECT_AUTOCAL) added in the configuration file of the
+   STM8 Touch Sensing firmware Library to enable or disable the autocalibration.
+
+ - Content:
+
+   o STM8 TOUCH SENSING LIBRARY V1.1.0
+   o STM8S207_TSRCK5W1_EVAL board firmware V1.1.0
+   o STM8S basic example firmware V1.1.0
+   o STM8L basic example firmware V1.1.0
+
+   o STM8S Standard Peripherals Library V1.0.1
+   o STM8L Standard Peripherals Library V0.0.3
+
+
+V1.0.0 / 22-JAN-2009
+--------------------
+
+ - First official package
+ 
+ - Content:
+
+   o STM8 TOUCH SENSING LIBRARY V1.0.0
+   o STM8S207_TSRCK5W1_EVAL board firmware V1.0.0
+   o STM8S basic example firmware V1.0.0
+   o STM8L basic example firmware V1.0.0
+
+   o STM8S Standard Peripherals Library V1.0.1
+   o STM8L Standard Peripherals Library V0.0.3
+
+
+V0.2.0 / 19-DEC-2008
+--------------------
+
+ - Second Beta package
+ 
+ - Content:
+
+   o STM8 TOUCH SENSING LIBRARY V0.2.0
+   o STM8S207_TSRCK5W1_EVAL board firmware V0.2.0
+   o STM8S basic example firmware V0.2.0
+   o STM8L basic example firmware V0.2.0
+
+   o STM8S Standard Peripherals Library V1.0.1
+   o STM8L Standard Peripherals Library V0.0.3
+
+ 
+V0.1.0 / 17-NOV-2008
+--------------------
+
+ - First Beta package
+ 
+ - Content:
+
+   o STM8 TOUCH SENSING LIBRARY V0.1.0
+   o STM8S20xK_TS1_EVAL board firmware V0.1.0
+   o STM8S basic example firmware V0.1.0
+   o STM8L basic example firmware V0.1.0
+
+   o STM8S Standard Peripherals Library V1.0.1
+   o STM8L Standard Peripherals Library V0.0.3
+ 
+ 
+V0.0.1 / 05-NOV-2008
+--------------------
+
+ - First Alpha package
+ 
+ - Content:
+
+   o STM8 TOUCH SENSING LIBRARY V0.0.9
+   o STM8S20xK_TS1_EVAL board firmware V0.0.1
+   o STM8S basic example firmware V0.0.1
+   o STM8L basic example firmware V0.0.1
+
+   o STM8S Standard Peripherals Library V1.0.1
+   o STM8L Standard Peripherals Library V0.0.3
+
+========================= (c) 2009 STMicroelectronics ==========================

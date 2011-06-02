@@ -1,0 +1,12 @@
+Func    Con    Pin#    Pin Name
+
+I/O Vdd    CN1    8    Vddio_1
+I/O gnd    CN1    4    Vssio_1
+
+ADC Vdd    CN3    1    Vdda
+ADC gnd    CN3    2    Vssa
+ADC    CN3    3-12
+
+I/O   
+
+Buzz    CN4    9    PD4
