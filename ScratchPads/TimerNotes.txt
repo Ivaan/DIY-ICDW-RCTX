@@ -1,0 +1,11 @@
+CD00190271.pdf
+RM0016
+Reference manual
+STM8S and STM8A microcontoller famelies
+
+Page 141/445
+
+Figure 35 and 36 describe an interesting detail of the Auto-Reload shadow register.
+ARPE - auto-reload preload determins if the Auto-Reload is changed immidiatly or after the next
+overflow event.
+Thinking about the PPM wave we need to generate, we ought to be aware of these different options.
