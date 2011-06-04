@@ -2,8 +2,8 @@
 # ignore bak files
 *.bak
 # ignore build files in debug and release directories
-*/Debug/
-*/Release/
+Debug/
+Release/
 # ignore environment files
 *.wed
 *.wdb
