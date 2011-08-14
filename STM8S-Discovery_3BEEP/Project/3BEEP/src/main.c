@@ -22,6 +22,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s.h"
 #include "stm8_tsl_rc_api.h"
+#include "ICDW_BeepDriver.h"
 /**
   * @addtogroup BEEP_3SignalsGeneration
   * @{
@@ -35,6 +36,7 @@
 
 u32 LSIMeasurment(void);
 void CLK_Configuration(void);
+void Tim2_Configuration(void);
 void GPIO_Configuration(void);
 void ExtraCode_Init(void);
 void ExtraCode_StateMachine(void);
@@ -43,7 +45,8 @@ void Toggle(void);
 
 /* Private functions ---------------------------------------------------------*/
 /* Global variables ----------------------------------------------------------*/
-u8 icount = 0 ;
+u8 icount = 0;
+
 
 /* Public functions ----------------------------------------------------------*/
 //--------    SECTION DEFINITION FOR THIS FILE   --------------
@@ -64,6 +67,7 @@ void main(void)
 {
 
     u8 i = 0;
+		u16 Timer2Count;
 
     /* Configuration of the GPIO*/
 		GPIO_Configuration();
@@ -79,13 +83,25 @@ void main(void)
 
     /* TS Application Initialisation */
 		ExtraCode_Init();
-		
+
+		/* Tim2 Configuration */
+		Tim2_Configuration();
+
     while (1)
     {
 			ExtraCode_StateMachine();
 			TSL_Action();
+			SubCounterSounds();
     }
 
+}
+
+void Tim2_Configuration(void)
+{
+	TIM2_DeInit();
+	TIM2_TimeBaseInit(TIM2_PRESCALER_8192, (u16)0xFFFF);
+	//TIM2_ITConfig(TIM2_IT_UPDATE, ENABLE);
+	TIM2_Cmd(ENABLE);
 }
 
 /**
@@ -124,7 +140,6 @@ void ExtraCode_Init(void)
 
 }
 
-
 /**
   ******************************************************************************
   * @brief TS Application code 
@@ -137,6 +152,7 @@ void ExtraCode_Init(void)
   */
 void ExtraCode_StateMachine(void)
 {
+	u16 Timer2Count;
 	
   if ((TSL_GlobalSetting.b.CHANGED) && (TSLState == TSL_IDLE_STATE))
   {
@@ -149,24 +165,24 @@ void ExtraCode_StateMachine(void)
 				{
             case 0:
                 // BEEPER 1kHz
-                BEEP_Cmd(DISABLE);
-                Delay(100);
+                //BEEP_Cmd(DISABLE);
+                //Delay(100);
                 BEEP_Init(BEEP_FREQUENCY_1KHZ);
                 BEEP_Cmd(ENABLE);
 								icount = 1;
                 break;
             case 1:
                 // BEEPER 2kHz
-                BEEP_Cmd(DISABLE);
-                Delay(100);
+                //BEEP_Cmd(DISABLE);
+                //Delay(100);
                 BEEP_Init(BEEP_FREQUENCY_2KHZ);
                 BEEP_Cmd(ENABLE);
 								icount = 2;
                 break;
             case 2:
 						    // BEEPER 4kHz
-                BEEP_Cmd(DISABLE);
-                Delay(100);
+                //BEEP_Cmd(DISABLE);
+                //Delay(100);
                 BEEP_Init(BEEP_FREQUENCY_4KHZ);
                 BEEP_Cmd(ENABLE);
                 icount = 3;
