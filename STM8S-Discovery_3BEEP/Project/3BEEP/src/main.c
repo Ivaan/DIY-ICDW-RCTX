@@ -22,6 +22,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s.h"
 #include "stm8_tsl_rc_api.h"
+#include "ICDW_Tim2Driver.h"
 #include "ICDW_BeepDriver.h"
 /**
   * @addtogroup BEEP_3SignalsGeneration
@@ -36,7 +37,6 @@
 
 u32 LSIMeasurment(void);
 void CLK_Configuration(void);
-void Tim2_Configuration(void);
 void GPIO_Configuration(void);
 void ExtraCode_Init(void);
 void ExtraCode_StateMachine(void);
@@ -85,7 +85,7 @@ void main(void)
 		ExtraCode_Init();
 
 		/* Tim2 Configuration */
-		Tim2_Configuration();
+		InitializeTim2();
 
     while (1)
     {
@@ -94,14 +94,6 @@ void main(void)
 			SubCounterSounds();
     }
 
-}
-
-void Tim2_Configuration(void)
-{
-	TIM2_DeInit();
-	TIM2_TimeBaseInit(TIM2_PRESCALER_8192, (u16)0xFFFF);
-	//TIM2_ITConfig(TIM2_IT_UPDATE, ENABLE);
-	TIM2_Cmd(ENABLE);
 }
 
 /**
