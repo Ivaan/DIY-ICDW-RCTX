@@ -31,8 +31,8 @@ typedef enum
 	BeepDriverPitch_Low = 1,
 	BeepDriverPitch_Medium = 2,
 	BeepDriverPitch_High = 3,
-	BeepDriverPitch_Done = 4,
-} BeepDriverPitch_TypeDef = 5;
+	BeepDriverPitch_Done = 4
+} BeepDriverPitch_TypeDef;
 
 typedef enum
 {
