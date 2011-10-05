@@ -66,7 +66,7 @@ void SubCounterSounds(void);
 
 void CountOut( int nNumber, BeepDriverPitch_TypeDef Pitch, int nPriority );
 void SetBeepSequence(BeepSequenceElement_TypeDef *BeepSequenceArray, int nPriority);
-void Action(void);
+void BeepDriver_Action(void);
 
 #endif /* __ICDW_BEEPDRIVER_H */
 

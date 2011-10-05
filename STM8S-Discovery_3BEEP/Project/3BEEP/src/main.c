@@ -91,7 +91,8 @@ void main(void)
     {
 			ExtraCode_StateMachine();
 			TSL_Action();
-			SubCounterSounds();
+			BeepDriver_Action();
+			//SubCounterSounds();
     }
 
 }
@@ -159,24 +160,16 @@ void ExtraCode_StateMachine(void)
                 // BEEPER 1kHz
                 //BEEP_Cmd(DISABLE);
                 //Delay(100);
-                BEEP_Init(BEEP_FREQUENCY_1KHZ);
-                BEEP_Cmd(ENABLE);
+								CountOut(83, BeepDriverPitch_Medium, 1);
+								//while(1)BeepDriver_Action();
 								icount = 1;
                 break;
             case 1:
-                // BEEPER 2kHz
-                //BEEP_Cmd(DISABLE);
-                //Delay(100);
-                BEEP_Init(BEEP_FREQUENCY_2KHZ);
-                BEEP_Cmd(ENABLE);
+								CountOut(16, BeepDriverPitch_Medium, 3);
 								icount = 2;
                 break;
             case 2:
-						    // BEEPER 4kHz
-                //BEEP_Cmd(DISABLE);
-                //Delay(100);
-                BEEP_Init(BEEP_FREQUENCY_4KHZ);
-                BEEP_Cmd(ENABLE);
+								CountOut(24, BeepDriverPitch_Medium, 2);
                 icount = 3;
                 break;
             case 3:

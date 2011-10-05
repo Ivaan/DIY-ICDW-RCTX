@@ -15,14 +15,16 @@ void CountOut( int nNumber, BeepDriverPitch_TypeDef Pitch, int nPriority )
 {
 	int nSeqIndex;
 	u16 nNextEventAt;
-	if( nPriority > m_nCurrentPriority )
+	if( nPriority > m_nCurrentPriority || m_State == BeepDriverState_Waiting )
 	{
 		m_nCurrentPriority = nPriority;
 		m_CountPitch = Pitch;
+		m_nNextTimerEvent = TIM2_GetCounter() + BeepDriverDuration_Bip;
+		m_State = BeepDriverState_Sequencing;
 		if(nNumber == 5)// special case for 5 - we want to count out all five bips, not just one boop
 		{
+			m_nNextSequencePoz = 0;
 			m_nCountNumberRemaining = 0;
-			m_nNextTimerEvent = TIM2_GetCounter();
 			nNextEventAt = m_nNextTimerEvent;
 			for(nSeqIndex = 0; nSeqIndex < 10; nSeqIndex += 2)
 			{ // add 10 elements (bip and space pairs)
@@ -49,14 +51,14 @@ void SetBeepSequence(BeepSequenceElement_TypeDef *NewBeepSequenceArray, int nPri
 {
 	int nSeqIndex;
 	u16 nNextEventAt;
+	m_State = BeepDriverState_Sequencing;
 
-	if( nPriority > m_nCurrentPriority )
+	if( nPriority > m_nCurrentPriority || m_State == BeepDriverState_Waiting )
 	{
 		m_nCurrentPriority = nPriority;
 		m_nCountNumberRemaining = 0;
 		m_nNextSequencePoz = 0;
-		m_nNextTimerEvent = TIM2_GetCounter();
-		
+		m_nNextTimerEvent = TIM2_GetCounter() + BeepDriverDuration_Bip;
 		nNextEventAt = m_nNextTimerEvent;
 		for(nSeqIndex = 0; nSeqIndex < MAX_SEQUENCE_ELEMENTS - 1 && NewBeepSequenceArray[nSeqIndex].BeepPitch != BeepDriverPitch_Done; nSeqIndex++)
 		{
@@ -71,7 +73,7 @@ void SetBeepSequence(BeepSequenceElement_TypeDef *NewBeepSequenceArray, int nPri
 	}
 }
 
-void Action(void)
+void BeepDriver_Action(void)
 {
 	if( m_State != BeepDriverState_Waiting && Tim2_HasCountPassed( m_nNextTimerEvent ))
 	{
@@ -83,15 +85,50 @@ void Action(void)
 		}
 		else
 		{
-			 m_nNextSequencePoz++;
-			 m_nNextTimerEvent = m_BeepEventsArray[m_nNextSequencePoz].Tim2ValueForEvent;
+			m_nNextSequencePoz++;
+			m_nNextTimerEvent = m_BeepEventsArray[m_nNextSequencePoz].Tim2ValueForEvent;
+			if(m_BeepEventsArray[m_nNextSequencePoz].BeepPitch == BeepDriverPitch_Done)
+			{
+				AddNextBatchOfBeepsFromCount();
+			}
 		}
 	}
 }
 
 void AddNextBatchOfBeepsFromCount(void)
 {
-	//TODO implement AddNextBatchOFBeepsFromCount
+	int nSeqIndex;
+	u16 nNextEventAt;
+
+	m_nNextSequencePoz = 0;
+	nNextEventAt = m_nNextTimerEvent;
+	for(nSeqIndex = 0; nSeqIndex < MAX_SEQUENCE_ELEMENTS - 1 && m_nCountNumberRemaining > 0; nSeqIndex += 2)
+	{
+		if(m_nCountNumberRemaining >= 5)
+		{
+			m_nCountNumberRemaining -= 5;
+			m_BeepEventsArray[nSeqIndex].BeepPitch = m_CountPitch;
+			m_BeepEventsArray[nSeqIndex].Tim2ValueForEvent = nNextEventAt;
+			nNextEventAt += BeepDriverDuration_Beep;
+			m_BeepEventsArray[nSeqIndex + 1].BeepPitch = BeepDriverPitch_Off;
+			m_BeepEventsArray[nSeqIndex + 1].Tim2ValueForEvent = nNextEventAt;
+			nNextEventAt += BeepDriverDuration_BeepSpace;
+		}
+		else
+		{
+			m_nCountNumberRemaining -= 1;
+			m_BeepEventsArray[nSeqIndex].BeepPitch = m_CountPitch;
+			m_BeepEventsArray[nSeqIndex].Tim2ValueForEvent = nNextEventAt;
+			nNextEventAt += BeepDriverDuration_Bip;
+			m_BeepEventsArray[nSeqIndex + 1].BeepPitch = BeepDriverPitch_Off;
+			m_BeepEventsArray[nSeqIndex + 1].Tim2ValueForEvent = nNextEventAt;
+			nNextEventAt += BeepDriverDuration_BipSpace;
+		}
+	}
+		//Add a done element to played from array
+	m_BeepEventsArray[nSeqIndex].BeepPitch = BeepDriverPitch_Done;
+	m_BeepEventsArray[nSeqIndex].Tim2ValueForEvent = nNextEventAt;
+
 }
 
 void PlaySequenceElement( BeepEventElement_TypeDef Element )
